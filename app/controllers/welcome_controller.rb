@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
   def nearestTrucks
-    distance = 0.003
+    distance = 0.01
     ranges = Location.get_locations_within(distance, params)
     # get all the trucks in range
     trucks = Truck.get_trucks(ranges)

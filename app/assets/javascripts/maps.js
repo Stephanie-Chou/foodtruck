@@ -5,7 +5,9 @@ function setFoodTruckMarkers(trucks, map){
   var title;
   trucks.forEach(function(truck, i){
     position = new google.maps.LatLng(truck.location.latitude, truck.location.longitude);
-    title = truck.name
+    title = truck.name;
+
+    console.log(truck);
 
     new google.maps.Marker({
       position: position,
@@ -16,10 +18,10 @@ function setFoodTruckMarkers(trucks, map){
 }
 
 
-function getNearestTrucks(long, lat){
+function getNearestTrucks(long, lat, map){
   request = $.get('nearestTrucks',{long: long, lat: lat});
   request.done(function(data){
-    console.log(data);
+    setFoodTruckMarkers(data, map)
   });
 }
 
@@ -61,7 +63,7 @@ function initialize() {
     latitude = places[0].geometry.location.k;
     longitude = places[0].geometry.location.B;
 
-    var trucks = getNearestTrucks(longitude, latitude);
+    var trucks = getNearestTrucks(longitude, latitude, map);
     // setFoodTruckMarkers(trucks,map);
 
     for (var i = 0, marker; marker = markers[i]; i++) {
@@ -70,29 +72,31 @@ function initialize() {
 
     // For each place, get the icon, place name, and location.
     markers = [];
-    var bounds = new google.maps.LatLngBounds();
+    var bounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(latitude+.01, longitude-.01),
+      new google.maps.LatLng(latitude-.01, longitude+.01)
+      );
     for (var i = 0, place; place = places[i]; i++) {
       var image = {
         url: place.icon,
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
+        scaledSize: new google.maps.Size(15, 15)
       };
 
       // Create a marker for each place.
-      var marker = new google.maps.Marker({
-        map: map,
-        icon: image,
-        title: place.name,
-        position: place.geometry.location
-      });
+      // var marker = new google.maps.Marker({
+      //   map: map,
+      //   icon: image,
+      //   title: place.name,
+      //   position: place.geometry.location
+      // });
 
-      markers.push(marker);
+      // markers.push(marker);
 
-      bounds.extend(place.geometry.location);
+      // bounds.extend(place.geometry.location);
     }
-
     map.fitBounds(bounds);
   });
   // [END region_getplaces]
