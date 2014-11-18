@@ -15,6 +15,14 @@ function setFoodTruckMarkers(trucks, map){
   });
 }
 
+
+function getNearestTrucks(long, lat){
+  request = $.get('nearestTrucks',{long: long, lat: lat});
+  request.done(function(data){
+    console.log(data);
+  });
+}
+
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
@@ -53,8 +61,8 @@ function initialize() {
     latitude = places[0].geometry.location.k;
     longitude = places[0].geometry.location.B;
 
-    getNearestTrucks(longitude, latitude);
-    plotNearestTrucks(map);
+    var trucks = getNearestTrucks(longitude, latitude);
+    // setFoodTruckMarkers(trucks,map);
 
     for (var i = 0, marker; marker = markers[i]; i++) {
       marker.setMap(null);
@@ -100,10 +108,3 @@ function initialize() {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
-function getNearestTrucks(long, lat){
-
-}
-
-function plotNearestTrucks(map){
-
-}
