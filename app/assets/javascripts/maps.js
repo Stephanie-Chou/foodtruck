@@ -1,5 +1,5 @@
 
-
+/* my own code here*/
 function setFoodTruckMarkers(trucks, map){
   var position;
   var title;
@@ -12,7 +12,8 @@ function setFoodTruckMarkers(trucks, map){
     new google.maps.Marker({
       position: position,
       map: map,
-      title: title
+      title: title,
+      icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
     })
   });
 }
@@ -25,9 +26,6 @@ function getNearestTrucks(long, lat, map){
   });
 }
 
-// This example adds a search box to a map, using the Google Place Autocomplete
-// feature. People can enter geographical searches. The search box will return a
-// pick list containing a mix of places and predicted search terms.
 
 function initialize() {
 
@@ -41,7 +39,7 @@ function initialize() {
       new google.maps.LatLng(37.7, 238.1131));
   map.fitBounds(defaultBounds);
 
-  // Create the search box and link it to the UI element.
+
   var input = /** @type {HTMLInputElement} */(
       document.getElementById('pac-input'));
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -49,9 +47,6 @@ function initialize() {
   var searchBox = new google.maps.places.SearchBox(
     /** @type {HTMLInputElement} */(input));
 
-  // [START region_getplaces]
-  // Listen for the event fired when the user selects an item from the
-  // pick list. Retrieve the matching places for that item.
   google.maps.event.addListener(searchBox, 'places_changed', function() {
 
     var places = searchBox.getPlaces();
@@ -62,8 +57,16 @@ function initialize() {
     /* my own code here*/
     latitude = places[0].geometry.location.k;
     longitude = places[0].geometry.location.B;
+    new google.maps.Marker({
+      position: new google.maps.LatLng(latitude, longitude),
+      map: map,
+      title: "You are Here",
+      icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+    });
 
     var trucks = getNearestTrucks(longitude, latitude, map);
+
+
     // setFoodTruckMarkers(trucks,map);
 
     for (var i = 0, marker; marker = markers[i]; i++) {
@@ -73,8 +76,8 @@ function initialize() {
     // For each place, get the icon, place name, and location.
     markers = [];
     var bounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(latitude+.01, longitude-.01),
-      new google.maps.LatLng(latitude-.01, longitude+.01)
+      new google.maps.LatLng(latitude+.003516, longitude-.003516),
+      new google.maps.LatLng(latitude-.003516, longitude+.003516)
       );
     for (var i = 0, place; place = places[i]; i++) {
       var image = {
@@ -99,10 +102,7 @@ function initialize() {
     }
     map.fitBounds(bounds);
   });
-  // [END region_getplaces]
 
-  // Bias the SearchBox results towards places that are within the bounds of the
-  // current map's viewport.
   google.maps.event.addListener(map, 'bounds_changed', function() {
     var bounds = map.getBounds();
     searchBox.setBounds(bounds);
