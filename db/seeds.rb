@@ -15,5 +15,5 @@ require 'json'
     Truck.create(name: truck["applicant"], fooditems: truck["fooditems"], location: loc)
   end
 
-# query = "select * from users where name like '#{input}%'"
-    # User.find_by_sql(query)
+# query = "select * from users where name like '%term%'"
+# User.find_by_sql(query)
