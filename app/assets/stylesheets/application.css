@@ -17,11 +17,12 @@
 
  html, body, #map-canvas {
         height: 100%;
+        width: 100%;
         margin: 0px;
         padding: 0px
       }
       .controls {
-        margin-top: 16px;
+        margin-top: 160px;
         border: 1px solid transparent;
         border-radius: 2px 0 0 2px;
         box-sizing: border-box;
@@ -29,6 +30,7 @@
         height: 32px;
         outline: none;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
       }
 
       #pac-input {
@@ -39,6 +41,7 @@
         font-size: 15px;
         font-weight: 300;
         text-overflow: ellipsis;
+
       }
 
       #pac-input:focus {
@@ -50,6 +53,7 @@
 
       .pac-container {
         font-family: Roboto;
+
       }
 
       #type-selector {
@@ -63,20 +67,26 @@
         font-size: 13px;
         font-weight: 300;
       }
-    .banner{
-      width: 100%;
-      height: 250px;
-      border: solid 1px white;
-      background-image: url("images/foodtruck.jpg");
-      background-size: cover;
-      background-position: center, center;
 
-    }
-    .banner h1{
-        color: white;
+      .header{
+        font-family: Roboto;
+        position: absolute;
+        background-image: url("images/foodtruck.jpg");
+        background-size: cover;
+        background-position: center, left;
+        width: 100%;
+        height: 135px;
+        z-index: 99;
       }
+        h1,h3 {
 
-    .row{
-      width: 70%;
-      margin: 0 auto;
-    }
+          color:white;
+        }
+        h3 {
+          font-style: italic;
+        }
+
+      .row{
+        width: 70%;
+        margin: 0 auto;
+      }
