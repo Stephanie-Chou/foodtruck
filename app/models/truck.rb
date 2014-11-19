@@ -11,6 +11,7 @@ class Truck < ActiveRecord::Base
   end
 
   def self.search_by_fooditem(term)
+    trucks = Truck.all
     trucks.select{|truck| truck.fooditems.include?(term) unless truck.fooditems.nil?}
    end
 end
