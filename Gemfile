@@ -29,6 +29,14 @@ gem 'spring',        group: :development
 gem 'rails_12factor'
 gem 'pry', '~>0.10.1'
 gem 'pry-nav'
+
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0'
+  gem 'factory_girl_rails'
+  gem "capybara"
+  gem 'database_cleaner', '~> 1.2.0'
+end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
