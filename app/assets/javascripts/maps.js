@@ -3,20 +3,39 @@
 function setFoodTruckMarkers(trucks, map){
   var position;
   var title;
+  var marker;
+  var infowindow;
+  var contentString;
+
   trucks.forEach(function(truck, i){
     position = new google.maps.LatLng(truck.location.latitude, truck.location.longitude);
     title = truck.name;
 
-    console.log(truck);
+  contentString = '<div id="content">'+
+    '<div id="siteNotice">'+
+    '</div>'+
+    '<h4 id="firstHeading" class="firstHeading">'+truck.name+'</h4>'+
+    '<div id="bodyContent">'+
+    '<p>'+truck.fooditems+'</p>'+
+    '</div>'+
+    '</div>'
 
-    new google.maps.Marker({
+    marker = new google.maps.Marker({
       position: position,
       map: map,
       title: title,
-      icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+      icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+      infowindow: new google.maps.InfoWindow({content: contentString})
     })
+
+    google.maps.event.addListener(marker, 'click', function(frozenMarker) {
+      return function(){
+        this.infowindow.open(map,frozenMarker);
+      }
+    }(marker));
   });
 }
+
 
 
 function getNearestTrucks(long, lat, map){
