@@ -67,6 +67,22 @@
         font-size: 13px;
         font-weight: 300;
       }
+      .alert {
+        margin-top: 200px;
+        position: absolute;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        width: 400px;
+        z-index: 99;
+        padding: 5px 11px 5px 13px;
+
+        margin-left: 90px;
+        background-color: green;
+
+      }
 
       .header{
         font-family: Roboto;
