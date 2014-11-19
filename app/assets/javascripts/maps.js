@@ -1,5 +1,15 @@
 
 /* my own code here*/
+function generateContentString(truck){
+  return '<div id="content">'+
+    '<div id="siteNotice">'+
+    '</div>'+
+    '<h4 id="firstHeading" class="firstHeading">'+truck.name+'</h4>'+
+    '<div id="bodyContent">'+
+    '<p>'+truck.fooditems+'</p>'+
+    '</div>'+
+    '</div>'
+}
 function setFoodTruckMarkers(trucks, map){
   var position;
   var title;
@@ -11,14 +21,7 @@ function setFoodTruckMarkers(trucks, map){
     position = new google.maps.LatLng(truck.location.latitude, truck.location.longitude);
     title = truck.name;
 
-  contentString = '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h4 id="firstHeading" class="firstHeading">'+truck.name+'</h4>'+
-    '<div id="bodyContent">'+
-    '<p>'+truck.fooditems+'</p>'+
-    '</div>'+
-    '</div>'
+    contentString = generateContentString(truck);
 
     marker = new google.maps.Marker({
       position: position,
