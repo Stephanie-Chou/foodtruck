@@ -9,4 +9,8 @@ class Location < ActiveRecord::Base
     p curr_location
     Location.where(latitude: (curr_location["lat"].to_f-distance/2)..(curr_location["lat"].to_f+distance/2), longitude: (curr_location["long"].to_f-distance/2)..(curr_location["long"].to_f+distance/2))
   end
+
+  def self.convert_miles_to_degrees(miles)
+    miles.to_f*0.014464
+  end
 end

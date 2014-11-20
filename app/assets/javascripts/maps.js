@@ -1,8 +1,10 @@
+/* my own code here*/
+
 var markers = [];
 var map;
 var latitude;
 var longitude;
-/* my own code here*/
+
 function setAllMap(map) {
   console.log(markers);
   for (var i = 0; i < markers.length; i++) {
@@ -67,12 +69,8 @@ function makeTruckMarkers(trucks){
 function generateContentString(truck){
   var listEl = '';
   truck.foods.forEach(function(food,i){
-    // li = document.createElement('li');
-    // li.textContent = food.name;
     listEl+= '<li class = "menuitem">'+food.name+'</li>';
   });
-
-  console.log(listEl);
 
   return '<div id="content">'+
     '<div id="siteNotice">'+
@@ -88,7 +86,7 @@ function generateContentString(truck){
 }
 
 function getNearestTrucks(long, lat){
-  request = $.get('trucks',{long: long, lat: lat});
+  request = $.get('trucks',{long: long, lat: lat, range: '.5'});
   request.done(function(data){
     makeTruckMarkers(data);
   });
@@ -155,10 +153,7 @@ function initialize() {
     searchBox.setBounds(bounds);
   });
 
-
   filters();
-
-
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
