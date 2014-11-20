@@ -34,42 +34,55 @@ function makeTruckMarkers(trucks){
   var contentString;
   var color;
 
-  trucks.forEach(function(truck, i){
-    position = new google.maps.LatLng(truck.location.latitude, truck.location.longitude);
-    title = truck.name;
+  if(trucks !== null){
+    trucks.forEach(function(truck, i){
+        position = new google.maps.LatLng(truck.location.latitude, truck.location.longitude);
+        title = truck.name;
 
-    contentString = generateContentString(truck);
+        contentString = generateContentString(truck);
 
-    color = 'green'
+        color = 'green'
 
-    marker = new google.maps.Marker({
-      position: position,
-      map: map,
-      title: title,
-      icon: "http://maps.google.com/mapfiles/ms/icons/"+color+"-dot.png",
-      infowindow: new google.maps.InfoWindow({content: contentString})
-    })
+        marker = new google.maps.Marker({
+          position: position,
+          map: map,
+          title: title,
+          icon: "http://maps.google.com/mapfiles/ms/icons/"+color+"-dot.png",
+          infowindow: new google.maps.InfoWindow({content: contentString})
+        })
 
-    google.maps.event.addListener(marker, 'click', function(frozenMarker) {
-      return function(){
-        this.infowindow.open(map,frozenMarker);
-      }
-    }(marker));
+        google.maps.event.addListener(marker, 'click', function(frozenMarker) {
+          return function(){
+            this.infowindow.open(map,frozenMarker);
+          }
+        }(marker));
 
-    markers.push(marker);
-  });
+        markers.push(marker);
+      });
+    }
 
   console.log(markers);
 }
 
 function generateContentString(truck){
+  var listEl = '';
+  truck.foods.forEach(function(food,i){
+    // li = document.createElement('li');
+    // li.textContent = food.name;
+    listEl+= '<li class = "menuitem">'+food.name+'</li>';
+  });
+
+  console.log(listEl);
+
   return '<div id="content">'+
     '<div id="siteNotice">'+
     '</div>'+
     '<h1 id="firstHeading" class="firstHeading">'+truck.name+'</h1>'+
     '<div id="bodyContent">'+
     '<h3>Menu</h3>'+
-    '<p>'+truck.fooditems+'</p>'+
+    '<ul>'+
+    listEl+
+    '</ul>'+
     '</div>'+
     '</div>'
 }
