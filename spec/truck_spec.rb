@@ -20,7 +20,8 @@ RSpec.describe Truck, :type => :model do
   it "searches by fooditem" do
     truck1 = Truck.create!(fooditems: "meat: potatoes")
     truck2 = Truck.create!(fooditems:"cookies")
+    trucks = Truck.all
 
-    expect(Truck.search_by_fooditem("cookies")).to eq([truck2])
+    expect(Truck.search_by_fooditem("cookies", trucks)).to eq([truck2])
   end
 end
