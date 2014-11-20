@@ -68,21 +68,36 @@
         font-weight: 300;
       }
       .alert {
+        margin-left: 90px;
         margin-top: 200px;
+        height: 32px;
+        width: 400px;
+        padding: 5px 11px 5px 13px;
+        background-color: green;
+
+      }
+
+      .map-overlay{
+
         position: absolute;
         border: 1px solid transparent;
         border-radius: 2px 0 0 2px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
-        height: 32px;
-        width: 400px;
         z-index: 99;
-        padding: 5px 11px 5px 13px;
-
-        margin-left: 90px;
-        background-color: green;
-
       }
+
+      #filters {
+        margin-top: 200px;
+        margin-left: 90px;
+        font-family: Roboto;
+        background-color: white;
+        padding: 10px;
+        width: 400px;
+      }
+        li{
+          list-style: none;
+        }
 
       .header{
         font-family: Roboto;
@@ -94,10 +109,6 @@
         height: 135px;
         z-index: 99;
       }
-        h1,h3 {
-
-          color:white;
-        }
         h3 {
           font-style: italic;
         }

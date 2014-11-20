@@ -1,21 +1,38 @@
-
+var markers = [];
+var map;
+var latitude;
+var longitude;
 /* my own code here*/
-function generateContentString(truck){
-  return '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h4 id="firstHeading" class="firstHeading">'+truck.name+'</h4>'+
-    '<div id="bodyContent">'+
-    '<p>'+truck.fooditems+'</p>'+
-    '</div>'+
-    '</div>'
+function setAllMap(map) {
+  console.log(markers);
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
 }
-function setFoodTruckMarkers(trucks, map){
+
+function showMarkers() {
+  setAllMap(map);
+}
+
+function clearMarkers(){
+    for (var i = 0, marker; marker = markers[i]; i++) {
+    marker.setMap(null);
+  }
+}
+
+function deleteMarkers(){
+  console.log("delete markers");
+  clearMarkers();
+  markers = [];
+}
+
+function makeTruckMarkers(trucks){
   var position;
   var title;
   var marker;
   var infowindow;
   var contentString;
+  var color;
 
   trucks.forEach(function(truck, i){
     position = new google.maps.LatLng(truck.location.latitude, truck.location.longitude);
@@ -23,11 +40,13 @@ function setFoodTruckMarkers(trucks, map){
 
     contentString = generateContentString(truck);
 
+    color = 'green'
+
     marker = new google.maps.Marker({
       position: position,
       map: map,
       title: title,
-      icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+      icon: "http://maps.google.com/mapfiles/ms/icons/"+color+"-dot.png",
       infowindow: new google.maps.InfoWindow({content: contentString})
     })
 
@@ -36,23 +55,34 @@ function setFoodTruckMarkers(trucks, map){
         this.infowindow.open(map,frozenMarker);
       }
     }(marker));
+
+    markers.push(marker);
   });
+
+  console.log(markers);
 }
 
+function generateContentString(truck){
+  return '<div id="content">'+
+    '<div id="siteNotice">'+
+    '</div>'+
+    '<h1 id="firstHeading" class="firstHeading">'+truck.name+'</h1>'+
+    '<div id="bodyContent">'+
+    '<h3>Menu</h3>'+
+    '<p>'+truck.fooditems+'</p>'+
+    '</div>'+
+    '</div>'
+}
 
-
-function getNearestTrucks(long, lat, map){
-  request = $.get('nearestTrucks',{long: long, lat: lat});
+function getNearestTrucks(long, lat){
+  request = $.get('trucks',{long: long, lat: lat});
   request.done(function(data){
-    setFoodTruckMarkers(data, map)
+    makeTruckMarkers(data);
   });
 }
-
 
 function initialize() {
-
-  var markers = [];
-  var map = new google.maps.Map(document.getElementById('map-canvas'), {
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
@@ -79,6 +109,7 @@ function initialize() {
     /* my own code here*/
     latitude = places[0].geometry.location.k;
     longitude = places[0].geometry.location.B;
+
     new google.maps.Marker({
       position: new google.maps.LatLng(latitude, longitude),
       map: map,
@@ -86,17 +117,10 @@ function initialize() {
       icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
     });
 
-    var trucks = getNearestTrucks(longitude, latitude, map);
+    getNearestTrucks(longitude, latitude);
 
+    deleteMarkers();
 
-    // setFoodTruckMarkers(trucks,map);
-
-    for (var i = 0, marker; marker = markers[i]; i++) {
-      marker.setMap(null);
-    }
-
-    // For each place, get the icon, place name, and location.
-    markers = [];
     var bounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(latitude+.003516, longitude-.003516),
       new google.maps.LatLng(latitude-.003516, longitude+.003516)
@@ -109,18 +133,6 @@ function initialize() {
         anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(15, 15)
       };
-
-      // Create a marker for each place.
-      // var marker = new google.maps.Marker({
-      //   map: map,
-      //   icon: image,
-      //   title: place.name,
-      //   position: place.geometry.location
-      // });
-
-      // markers.push(marker);
-
-      // bounds.extend(place.geometry.location);
     }
     map.fitBounds(bounds);
   });
@@ -129,6 +141,11 @@ function initialize() {
     var bounds = map.getBounds();
     searchBox.setBounds(bounds);
   });
+
+
+  filters();
+
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
