@@ -6,5 +6,20 @@
     </div>
 
     <input id="pac-input" class = 'controls' type="text" placeholder="Find Food">
-<!--     <div class  = "alert"> <%= %> </div>
- -->    <div id="map-canvas" ></div>
+<!--     <div class  = "alert map-overlay"> <%= %> </div>
+ -->
+    <form id = "filters" class = "map-overlay">
+      <label>Search within</label>
+      <li><input type="radio" name="range" value="0.5" checked> Walking Distance (0.5 mi)</li>
+      <li><input type="radio" name="range" value="2.0">Biking Distance (2.0 mi)</li>
+      <li><input type="radio" name="range" value="5.0">Driving Distance (5.0 mi)</li>
+
+      <label>I have a taste for</label>
+      <li><input type="checkbox" value="mexican" name="truckType[mexican]">Mexican</li>
+      <li><input type="checkbox" value="indian" name="truckType[indian]">Indian</li>
+      <li><input type="checkbox" value="burger" name="truckType[burger]">Burgers</li>
+      <li><input type="checkbox" value="sandwiches" name="truckType[sandwiches]">Sandwiches</li>
+      <li><input type="checkbox" value="chinese" name="truckType[chinese]">Chinese</li>
+
+    </form>
+    <div id="map-canvas" ></div>
