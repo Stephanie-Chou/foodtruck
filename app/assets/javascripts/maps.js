@@ -52,21 +52,24 @@ function deleteMarkers(){
 function calculateBoundsChange(bounds){
     if (boundsSet == false){
       boundsSet = true;
+
       console.log("first time set");
       maxBounds.eak = bounds.Ea.k;
       maxBounds.eaj = bounds.Ea.j;
       maxBounds.vak = bounds.va.k;
       maxBounds.vaj = bounds.va.j;
+
     }else{
       boundsChange = Math.max(bounds.Ea.k-maxBounds.eak, bounds.Ea.j-maxBounds.eaj, bounds.va.k-maxBounds.vak, bounds.va.j-maxBounds.vaj)
-
-      if (boundsChange >= 0.6686){
+      console.log(boundsChange);
+      if (boundsChange >= 0.0004){
         boundsSet = false;
         boundsChange = 0;
         console.log("more that 6686")
-        // latitude = bounds.getCenter().location.k;
-        // longitude = bounds.getCenter().location.B;
-        // getNearestTrucks(longitude, latitude);
+        latitude = bounds.getCenter().k;
+        longitude = bounds.getCenter().B;
+        var options = $("#filters").serializeArray()
+        getNearestTrucks(longitude, latitude, options );
       }
     }
 
@@ -130,7 +133,7 @@ function initialize() {
   google.maps.event.addListener(map, 'bounds_changed', function() {
     var bounds = map.getBounds();
     // when bounds have moved more than x amount, ajax for more!
-    // calculateBoundsChange(bounds);
+    calculateBoundsChange(bounds);
     searchBox.setBounds(bounds);
   });
 
