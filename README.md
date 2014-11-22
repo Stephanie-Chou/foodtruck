@@ -1,9 +1,4 @@
-foodtruck
-=========
-
-uber coding challenge
-
-# Overview
+# Food Truck
 ## Problem
   Users need to find foodtrucks in the city of San Francisco by type near a certain location. This information also needs to be visualized on a map.
 ## Solution
@@ -20,6 +15,8 @@ Rails is also useful for RESTful application design. Had this application had mo
 
 Rails also lends itself to testing. Rspec is easily included, implemented and run.
 
+
+### Endpoints
 /truck
 
 1. search by location (lat and long)
