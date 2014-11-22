@@ -1,17 +1,30 @@
 /* my own code here*/
 
-var markers = [];
+var markers = []; // stores current markers
 var map;
 var latitude;
 var longitude;
 
-function getNearestTrucks(long, lat){
-  request = $.get('trucks',{long: long, lat: lat});
+var boundsChange = 0;
+var boundsSet = false;
+var maxBounds = {
+  eak: 0,
+  eaj: 0,
+  vak: 0,
+  vaj: 0
+};
+// keep track of max bounds so far.
+// when new max bounds exceeds old max bounds by x degrees, reset old max bounds to current max bounds
+
+function getNearestTrucks(long, lat, options){
+
+  options.push({name:"lat", "value": lat});
+  options.push({name: "long", "value": long});
+  request = $.get('trucks',options);
   request.done(function(data){
     makeTruckMarkers(data);
   });
 }
-
 
 /* Google Maps API */
 function setAllMap(map) {
@@ -34,6 +47,29 @@ function clearMarkers(){
 function deleteMarkers(){
   clearMarkers();
   markers = [];
+}
+
+function calculateBoundsChange(bounds){
+    if (boundsSet == false){
+      boundsSet = true;
+      console.log("first time set");
+      maxBounds.eak = bounds.Ea.k;
+      maxBounds.eaj = bounds.Ea.j;
+      maxBounds.vak = bounds.va.k;
+      maxBounds.vaj = bounds.va.j;
+    }else{
+      boundsChange = Math.max(bounds.Ea.k-maxBounds.eak, bounds.Ea.j-maxBounds.eaj, bounds.va.k-maxBounds.vak, bounds.va.j-maxBounds.vaj)
+
+      if (boundsChange >= 0.6686){
+        boundsSet = false;
+        boundsChange = 0;
+        console.log("more that 6686")
+        // latitude = bounds.getCenter().location.k;
+        // longitude = bounds.getCenter().location.B;
+        // getNearestTrucks(longitude, latitude);
+      }
+    }
+
 }
 
 function initialize() {
@@ -71,7 +107,7 @@ function initialize() {
       icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
     });
 
-    getNearestTrucks(longitude, latitude);
+    getNearestTrucks(longitude, latitude, []);
 
     deleteMarkers();
 
@@ -93,6 +129,8 @@ function initialize() {
 
   google.maps.event.addListener(map, 'bounds_changed', function() {
     var bounds = map.getBounds();
+    // when bounds have moved more than x amount, ajax for more!
+    // calculateBoundsChange(bounds);
     searchBox.setBounds(bounds);
   });
 
@@ -100,7 +138,6 @@ function initialize() {
 
   $("#filters").change(function(e){
     e.preventDefault();
-    console.log("change");
     filters($("#filters"));
   });
 
@@ -108,10 +145,6 @@ function initialize() {
     e.preventDefault();
     console.log("submit");
   });
-
-
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-
