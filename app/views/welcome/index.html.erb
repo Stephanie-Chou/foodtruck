@@ -5,22 +5,23 @@
       </div>
     </div>
 
-    <input id="pac-input" class = 'controls' type="text" placeholder="Find Food">
-<!--     <div class  = "alert map-overlay"> <%= %> </div>
- -->
+    <input id="pac-input" class = 'controls' type="text" placeholder="Where are you?">
+
     <form id = "filters" class = "map-overlay">
+      <label>I have a taste for</label>
+      <input type = "text" placeholder= "Burritos cookies ..." name = "truckType[search]" id = "food-search"/>
+      <br>
       <label>Search within</label>
       <li><input type="radio" name="range" value="0.5" checked> Walking Distance (0.5 mi)</li>
-      <li><input type="radio" name="range" value="2.0">Biking Distance (2.0 mi)</li>
-      <li><input type="radio" name="range" value="5.0">Driving Distance (5.0 mi)</li>
+      <li><input type="radio" name="range" value="1.0">Biking Distance (1.0 mi)</li>
+      <li><input type="radio" name="range" value="2.5">Driving Distance (2.5 mi)</li>
 
-      <label>I have a taste for</label>
-      <input type = "text" placeholder= "food!" name = "truckType[search]" id = "food-search">
-      <li><input type="checkbox" value="fruit" name="truckType[fruit]">fruit</li>
+
+<!--       <li><input type="checkbox" value="fruit" name="truckType[fruit]">fruit</li>
       <li><input type="checkbox" value="snacks" name="truckType[snacks]">snacks</li>
       <li><input type="checkbox" value="burrito" name="truckType[burrito]">burrito</li>
       <li><input type="checkbox" value="sandwiches" name="truckType[sandwiches]">Sandwiches</li>
-      <li><input type="checkbox" value="hot and cold drinks" name="truckType[hot and cold drinks]">drinks</li>
+      <li><input type="checkbox" value="hot and cold drinks" name="truckType[hot and cold drinks]">drinks</li> -->
 
     </form>
     <div id="map-canvas" ></div>

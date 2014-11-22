@@ -4,9 +4,6 @@ class Location < ActiveRecord::Base
 
 
   def self.get_locations_within(distance, curr_location)
-    # curr_location = {latitude: 0, longitude: 0}
-    p "*"*100
-    p curr_location
     Location.where(latitude: (curr_location["lat"].to_f-distance/2)..(curr_location["lat"].to_f+distance/2), longitude: (curr_location["long"].to_f-distance/2)..(curr_location["long"].to_f+distance/2))
   end
 

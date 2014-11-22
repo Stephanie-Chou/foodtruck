@@ -5,6 +5,15 @@ var map;
 var latitude;
 var longitude;
 
+function getNearestTrucks(long, lat){
+  request = $.get('trucks',{long: long, lat: lat});
+  request.done(function(data){
+    makeTruckMarkers(data);
+  });
+}
+
+
+/* Google Maps API */
 function setAllMap(map) {
   console.log(markers);
   for (var i = 0; i < markers.length; i++) {
@@ -23,73 +32,8 @@ function clearMarkers(){
 }
 
 function deleteMarkers(){
-  console.log("delete markers");
   clearMarkers();
   markers = [];
-}
-
-function makeTruckMarkers(trucks){
-  var position;
-  var title;
-  var marker;
-  var infowindow;
-  var contentString;
-  var color;
-
-  if(trucks !== null){
-    trucks.forEach(function(truck, i){
-        position = new google.maps.LatLng(truck.location.latitude, truck.location.longitude);
-        title = truck.name;
-
-        contentString = generateContentString(truck);
-
-        color = 'green'
-
-        marker = new google.maps.Marker({
-          position: position,
-          map: map,
-          title: title,
-          icon: "http://maps.google.com/mapfiles/ms/icons/"+color+"-dot.png",
-          infowindow: new google.maps.InfoWindow({content: contentString})
-        })
-
-        google.maps.event.addListener(marker, 'click', function(frozenMarker) {
-          return function(){
-            this.infowindow.open(map,frozenMarker);
-          }
-        }(marker));
-
-        markers.push(marker);
-      });
-    }
-
-  console.log(markers);
-}
-
-function generateContentString(truck){
-  var listEl = '';
-  truck.foods.forEach(function(food,i){
-    listEl+= '<li class = "menuitem">'+food.name+'</li>';
-  });
-
-  return '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h1 id="firstHeading" class="firstHeading">'+truck.name+'</h1>'+
-    '<div id="bodyContent">'+
-    '<h3>Menu</h3>'+
-    '<ul>'+
-    listEl+
-    '</ul>'+
-    '</div>'+
-    '</div>'
-}
-
-function getNearestTrucks(long, lat){
-  request = $.get('trucks',{long: long, lat: lat, range: '.5'});
-  request.done(function(data){
-    makeTruckMarkers(data);
-  });
 }
 
 function initialize() {
@@ -117,7 +61,6 @@ function initialize() {
       return;
     }
 
-    /* my own code here*/
     latitude = places[0].geometry.location.k;
     longitude = places[0].geometry.location.B;
 
@@ -153,6 +96,8 @@ function initialize() {
     searchBox.setBounds(bounds);
   });
 
+  /* My own Code here */
+
   $("#filters").change(function(e){
     e.preventDefault();
     console.log("change");
@@ -162,7 +107,6 @@ function initialize() {
   $("#filters").submit(function(e){
     e.preventDefault();
     console.log("submit");
-    // filters($("#filters"));
   });
 
 
