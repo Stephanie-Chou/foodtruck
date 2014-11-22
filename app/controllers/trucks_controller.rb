@@ -13,12 +13,27 @@ class TrucksController < ApplicationController
     trucks = Truck.get_trucks(ranges)
 
     # TODO get all the trucks in range with a particular filter
-    trucks = Truck.search_by_fooditem(params["truckType"].keys, trucks) unless params["truckType"].nil?
+
+    unless params["truckType"].nil?
+     # if the search box is empty and there are no terms, then don't parse any terms. search for everything
+      unless params["truckType"]["search"].empty? && params["truckType"].keys.length == 1
+        terms = parseTerms(params["truckType"])
+        trucks = Truck.search_by_fooditem(terms, trucks)
+      end
+    end
 
     if request.xhr?
       render :json => trucks.to_json(:include => [:location, :foods])
     end
 
+  end
+
+
+  def parseTerms(terms)
+    # if the search box is empty, then just grab the checked stuff...
+
+    keywords = terms["search"].nil? || terms["search"].empty? ? [] : terms["search"].split(" ")
+    terms.keys + keywords
   end
 
 end

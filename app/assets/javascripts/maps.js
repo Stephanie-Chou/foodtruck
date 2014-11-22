@@ -153,7 +153,19 @@ function initialize() {
     searchBox.setBounds(bounds);
   });
 
-  filters();
+  $("#filters").change(function(e){
+    e.preventDefault();
+    console.log("change");
+    filters($("#filters"));
+  });
+
+  $("#filters").submit(function(e){
+    e.preventDefault();
+    console.log("submit");
+    // filters($("#filters"));
+  });
+
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
