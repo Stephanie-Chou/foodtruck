@@ -22,7 +22,7 @@
         padding: 0px
       }
       .controls {
-        margin-top: 350px;
+        margin-top: 185px;
         border: 1px solid transparent;
         border-radius: 2px 0 0 2px;
         box-sizing: border-box;
@@ -79,7 +79,7 @@
       }
 
       #filters {
-        margin-top: 200px;
+        margin-top: 220px;
         margin-left: 89px;
         font-family: Roboto;
         background-color: white;
@@ -98,8 +98,8 @@
         background-position: center, center;
         width: 400px;
         margin-left: 89px;
-        margin-top: 80px;
-        height: 260px;
+        margin-top: 40px;
+        height: 140px;
         z-index: 99;
       }
         .header h1, h3 {
@@ -118,6 +118,3 @@
         width: 70%;
         margin: 0 auto;
       }
-    .arrow{
-
-    }

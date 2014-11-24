@@ -46,7 +46,7 @@ function generateContentString(truck){
     '</div>'+
     '<h1 id="firstHeading" class="firstHeading">'+truck.name+'</h1>'+
     '<div id="bodyContent">'+
-    '<h3>Menu</h3>'+
+    '<h4>Menu</h4>'+
     '<ul>'+
     listEl+
     '</ul>'+
