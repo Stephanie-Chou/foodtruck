@@ -80,11 +80,11 @@ I would test the frontend and controller more thoroughly.
 
   Learn more about me and my other projects at www.stephaniechou.com
 
-  ### Flipside
+### Flipside
   live: http://flipside.herokuapp.com/
   code: https://github.com/bobolinks-2014/FlipSide
 
-  ### Gasulator
+### Gasulator
   live: http://gasulator.herokuapp.com/
   code: https://github.com/bobolinks-2014/bespectacled_lampshade
 
