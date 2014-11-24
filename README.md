@@ -24,14 +24,14 @@ Rails also lends itself to testing. Rspec is easily included, implemented and ru
 3. search by range (default )
 
 Types of parameters accepted:
-<code>
+<pre>
 {
   lat: string or integer,
   long: string or integer,
   range: string or integer,
   truckType: string delimited by spaces
 }
-</code>
+</pre>
 
 ### Filtering
 Users should be able to search by type of truck. The filtering uses partial string matching. It allows users to search 'cookies' or 'cookie' and come up with the same result. With more time, searching would be finessed to accomodate typos and searching by categories. For example if a user searched for 'indian', food trucks that sell roti would be shown even if the word Indian is not listed as a food item.
@@ -48,10 +48,13 @@ Users are able to search in 3 ranges: walking distance, biking distance, driving
 
 ## Dynamically Updating Markers
 As users move the view of the map around, the map will dynamically render new markers within the new viewing frame. There were a couple of different problems to consider with this feature.
+
 1. Should existing food type filters be applied as the map bounds change.
   - Yes, exisiting filters should be applied.
+
 2. Should all trucks be replaced and rerendered, or should only trucks within the new range be rerendered.
-  - Yes, all trucks should be replaced and rerendered. The database query is fast since there aren't too many markers. With more time, I might do this differently. It would require more tracking and computation of bounds as they change. Also, with more markers it would probably be faster.
+  - Yes, all trucks should be replaced and rerendered. The database query is fast since there aren't too many markers. With more time, I would do this differently because there is some wait time for query and the markers to render. It would require more tracking and computation of bounds as they change.
+
 3. How often should new markers be rendered
   - The map bounds of Google Maps update very frequently when a user moves around the map. This implementation queries for new trucks every 0.0004 degrees.
 
