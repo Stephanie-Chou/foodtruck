@@ -17,11 +17,11 @@ Rails also lends itself to testing. Rspec is easily included, implemented and ru
 
 
 ### Endpoints
-/truck
+<pre>/truck</pre>
 
 1. search by location (lat and long)
 2. search by truck
-3. search by range (default )
+3. search by range (default: 0.5 miles )
 
 Types of parameters accepted:
 <pre>
@@ -34,7 +34,7 @@ Types of parameters accepted:
 </pre>
 
 ### Filtering
-Users should be able to search by type of truck. The filtering uses partial string matching. It allows users to search 'cookies' or 'cookie' and come up with the same result. With more time, searching would be finessed to accomodate typos and searching by categories. For example if a user searched for 'indian', food trucks that sell roti would be shown even if the word Indian is not listed as a food item.
+Users should be able to search by type of truck. The filtering uses partial string matching. It allows users to search 'cookies' or 'cookie' and come up with the same result.
 
 ## Frontend
 
@@ -53,7 +53,7 @@ As users move the view of the map around, the map will dynamically render new ma
   - Yes, exisiting filters should be applied.
 
 2. Should all trucks be replaced and rerendered, or should only trucks within the new range be rerendered.
-  - Yes, all trucks should be replaced and rerendered. The database query is fast since there aren't too many markers. With more time, I would do this differently because there is some wait time for query and the markers to render. It would require more tracking and computation of bounds as they change.
+  - Yes, all trucks should be replaced and rerendered. The database query doesn't take too long since there aren't too many markers.
 
 3. How often should new markers be rendered
   - The map bounds of Google Maps update very frequently when a user moves around the map. This implementation queries for new trucks every 0.0004 degrees.
@@ -68,7 +68,23 @@ As users move the view of the map around, the map will dynamically render new ma
 ### jQuery
   Because the map is the main focus of the app, there was no need for any frameworks. Jquery was sufficient to make AJAX calls and event handlers for the filtering.
 
+## Future Work
+
+Instead of querying the database every time the bounds change, I would do this differently because there is some wait time for query and the markers to render. It would require more tracking and computation of bounds as they change.
+
+Filtering by truck type be finessed to accomodate typos and searching by categories. For example if a user searched for 'indian', food trucks that sell roti would be shown even if the word Indian is not listed as a food item.
+
+I would test the frontend and controller more thoroughly.
+
 ## About Me
 
   Learn more about me and my other projects at www.stephaniechou.com
+
+  ### Flipside
+  live: http://flipside.herokuapp.com/
+  code: https://github.com/bobolinks-2014/FlipSide
+
+  ### Gasulator
+  live: http://gasulator.herokuapp.com/
+  code: https://github.com/bobolinks-2014/bespectacled_lampshade
 
