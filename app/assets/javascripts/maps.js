@@ -2,8 +2,11 @@
 
 var markers = []; // stores current markers
 var map;
+
 var latitude;
 var longitude;
+var maxRangeSet = false;
+var maxRange = 0;
 
 var boundsChange = 0;
 var boundsSet = false;
@@ -13,8 +16,6 @@ var maxBounds = {
   vak: 0,
   vaj: 0
 };
-// keep track of max bounds so far.
-// when new max bounds exceeds old max bounds by x degrees, reset old max bounds to current max bounds
 
 function getNearestTrucks(long, lat, options){
 
@@ -53,7 +54,6 @@ function calculateBoundsChange(bounds){
     if (boundsSet == false){
       boundsSet = true;
 
-      console.log("first time set");
       maxBounds.eak = bounds.Ea.k;
       maxBounds.eaj = bounds.Ea.j;
       maxBounds.vak = bounds.va.k;
@@ -61,17 +61,31 @@ function calculateBoundsChange(bounds){
 
     }else{
       boundsChange = Math.max(bounds.Ea.k-maxBounds.eak, bounds.Ea.j-maxBounds.eaj, bounds.va.k-maxBounds.vak, bounds.va.j-maxBounds.vaj)
-      console.log(boundsChange);
+      // console.log(boundsChange);
       if (boundsChange >= 0.0004){
         boundsSet = false;
         boundsChange = 0;
-        console.log("more that 6686")
+
         latitude = bounds.getCenter().k;
         longitude = bounds.getCenter().B;
-        var options = $("#filters").serializeArray()
-        getNearestTrucks(longitude, latitude, options );
+        var options = $("#filters").serializeArray();
+
+        calculateMaxRange(options[1].value);
+        // options[1].value = maxRange;
+        getNearestTrucks(longitude, latitude, options);
       }
     }
+}
+
+function calculateMaxRange(selectedRange){
+  if (maxRangeSet == true){
+    var latRange = Math.abs(original_latitude - maxBounds.eak)/0.014464;
+    var longRange = Math.abs(original_longitude - maxBounds.vaj)/0.014464;
+
+    maxRange = Math.max(latRange, longRange, parseFloat(selectedRange), maxRange);
+  }else{
+    maxRangeSet = true;
+  }
 
 }
 
@@ -102,6 +116,8 @@ function initialize() {
 
     latitude = places[0].geometry.location.k;
     longitude = places[0].geometry.location.B;
+    original_latitude = places[0].geometry.location.k;
+    original_longitude = places[0].geometry.location.B;
 
     new google.maps.Marker({
       position: new google.maps.LatLng(latitude, longitude),
@@ -146,7 +162,6 @@ function initialize() {
 
   $("#filters").submit(function(e){
     e.preventDefault();
-    console.log("submit");
   });
 }
 

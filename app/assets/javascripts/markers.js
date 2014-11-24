@@ -32,6 +32,7 @@ function makeTruckMarkers(trucks){
         markers.push(marker);
       });
     }
+
 }
 
 function generateContentString(truck){
