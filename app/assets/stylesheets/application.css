@@ -22,7 +22,7 @@
         padding: 0px
       }
       .controls {
-        margin-top: 160px;
+        margin-top: 350px;
         border: 1px solid transparent;
         border-radius: 2px 0 0 2px;
         box-sizing: border-box;
@@ -67,15 +67,6 @@
         font-size: 13px;
         font-weight: 300;
       }
-      .alert {
-        margin-left: 90px;
-        margin-top: 200px;
-        height: 32px;
-        width: 400px;
-        padding: 5px 11px 5px 13px;
-        background-color: green;
-
-      }
 
       .map-overlay{
 
@@ -89,7 +80,7 @@
 
       #filters {
         margin-top: 200px;
-        margin-left: 90px;
+        margin-left: 89px;
         font-family: Roboto;
         background-color: white;
         padding: 10px;
@@ -104,11 +95,11 @@
         position: absolute;
         background-image: url("images/foodtruck.jpg");
         background-size: cover;
-        background-position: center, left;
+        background-position: center, center;
         width: 400px;
-        margin-left: 90px;
-        margin-top: 40px;
-        height: 115px;
+        margin-left: 89px;
+        margin-top: 80px;
+        height: 260px;
         z-index: 99;
       }
         .header h1, h3 {
@@ -127,3 +118,6 @@
         width: 70%;
         margin: 0 auto;
       }
+    .arrow{
+
+    }
